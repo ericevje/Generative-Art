@@ -4,7 +4,7 @@ float zoff = 0;
 int cols;
 int rows;
 int scl = 4;
-int count = 1000;
+int count = 500;
 float zinc = 0.001;
 float prev_avg_red = 256;
 color stroke_color = color(0, 0, 0, 5);
@@ -16,12 +16,11 @@ PVector[] flowfield;
 Particle[] particles = new Particle[count];
 
 void setup() {
-  size(800, 800);
+  size(1000, 1000);
   background(255);
   cols = floor(width / scl);
   println(cols);
   rows = floor(height / scl);
-  println(rows);
   flowfield = new PVector[rows*cols];
   for (int i = 0; i < flowfield.length; i++){
       flowfield[i] = new PVector(0,0);
@@ -64,7 +63,10 @@ void pixel_intensity(){
   else{
     prev_avg_red = avg_red;
   }
-  //println(zinc);
+}
+
+void mouseClicked() {
+  saveFrame();
 }
     
 
