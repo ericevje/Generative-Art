@@ -1,31 +1,49 @@
 float xoff = 0;
 float yoff = 0;
 float zoff = 0;
+float inc = 0.01;
 int cols;
 int rows;
 int scl = 4;
-int count = 500;
+float count;
 float zinc = 0.001;
 float prev_avg_red = 256;
 color stroke_color = color(0, 0, 0, 5);
-int max_speed = 20;
-int vec_mag = 10;
+float max_speed_black;
+float max_speed_white;
+float vec_mag_black;
+float vec_mag_white;
+float max_speed;
+float vec_mag;
 
 PVector[] flowfield;
-
-Particle[] particles = new Particle[count];
+Particle[] particles;
 
 void setup() {
-  size(1000, 1000);
+  size(3000, 3000);
   background(255);
   cols = floor(width / scl);
-  println(cols);
   rows = floor(height / scl);
   flowfield = new PVector[rows*cols];
+  float flo_height = float(height);
+  float flo_width = float(width);
+  count = ((flo_width * flo_height) / (800.0 * 800.0)) * 1000.0;
+  max_speed_black = (((flo_width + flo_height)/2.0) / 800.0) * 20.0;
+  max_speed_white = (((flo_width + flo_height)/2.0) / 800.0) * 5.0;
+  vec_mag_black = (((flo_width + flo_height)/2.0) / 800.0) * 10.0;
+  vec_mag_white = (((flo_width + flo_height)/2.0) / 800.0) * 2.0;
+  inc = inc * (((flo_width + flo_height)/2.0) / 800.0);
+  
+  println(width, height, count, max_speed_black, max_speed_white, vec_mag_black, vec_mag_white, inc);
+  
+  max_speed = max_speed_black;
+  vec_mag = vec_mag_black;
+  
+  particles = new Particle[int(count + 1)];
   for (int i = 0; i < flowfield.length; i++){
       flowfield[i] = new PVector(0,0);
   }
-  println(flowfield.length);
+  //println(flowfield.length);
   //flowfield = new P[rows*cols];
   //println(flowfield.length);
   
@@ -43,20 +61,20 @@ void pixel_intensity(){
     avg_red += red(c1);
   }
   avg_red = avg_red / len;
-  println(avg_red);
+  //println(avg_red);
   
   if (avg_red < 100 && avg_red < prev_avg_red) {
     stroke_color = color(255, 255, 255, 50);
-    max_speed = 5;
-    vec_mag = 2;
+    max_speed = max_speed_white;
+    vec_mag = vec_mag_white;
     zinc *= -1;
     prev_avg_red = avg_red;
   }
   else if (avg_red >= 254 && avg_red > prev_avg_red) {
     background(255);
     stroke_color = color(0, 0, 0, 5);
-    max_speed = 20; 
-    vec_mag = 10;
+    max_speed = max_speed_black; 
+    vec_mag = vec_mag_black;
     zinc *= -1;
     prev_avg_red = avg_red;
   }
@@ -71,15 +89,14 @@ void mouseClicked() {
     
 
 void draw(){
-  //background(255);
-  //println(frameRate);
   pixel_intensity();
   for (int i = 0; i < count; i++){
     particles[i].follow(flowfield);
-    particles[i].update(stroke_color, max_speed);
+    particles[i].update(stroke_color, int(max_speed));
     particles[i].edges();
     particles[i].show();
   }
+  //println(stroke_color, max_speed, vec_mag);
   yoff = 0;
   zoff += zinc;
   //println(zoff, zinc);
@@ -98,9 +115,9 @@ void draw(){
       //strokeWeight(1);
       //line(0, 0, scl, 0);
       //pop();
-      xoff += 0.1;
+      xoff += inc;
     }
-    yoff += 0.1;
+    yoff += inc;
   }
   //noLoop();
 }

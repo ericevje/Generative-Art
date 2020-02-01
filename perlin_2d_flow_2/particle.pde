@@ -3,7 +3,7 @@ class Particle{
   PVector vel;
   PVector acc;
   PVector prev_pos;
-  int maxspeed = 80;
+  int maxspeed = 20;
   color stroke_color = color(0, 0, 0, 5);
   
   Particle(){
