@@ -1,10 +1,10 @@
 float xoff = 0;
 float yoff = 0;
 float zoff = 0;
-float inc = 0.01;
+float inc = 0.1;
 int cols;
 int rows;
-int scl = 4;
+float scl = 4;
 float count;
 float zinc = 0.001;
 float prev_avg_red = 256;
@@ -20,7 +20,7 @@ PVector[] flowfield;
 Particle[] particles;
 
 void setup() {
-  size(3000, 3000);
+  size(9000, 9000);
   background(255);
   cols = floor(width / scl);
   rows = floor(height / scl);
@@ -32,9 +32,10 @@ void setup() {
   max_speed_white = (((flo_width + flo_height)/2.0) / 800.0) * 5.0;
   vec_mag_black = (((flo_width + flo_height)/2.0) / 800.0) * 10.0;
   vec_mag_white = (((flo_width + flo_height)/2.0) / 800.0) * 2.0;
-  inc = inc * (((flo_width + flo_height)/2.0) / 800.0);
+  //inc = inc * pow((((flo_width + flo_height)/2.0) / 800.0), 1.9);
+  scl = (((flo_width + flo_height)/2.0) / 800.0) * scl;
   
-  println(width, height, count, max_speed_black, max_speed_white, vec_mag_black, vec_mag_white, inc);
+  println(width, height, count, max_speed_black, max_speed_white, vec_mag_black, vec_mag_white, scl);
   
   max_speed = max_speed_black;
   vec_mag = vec_mag_black;
@@ -89,6 +90,7 @@ void mouseClicked() {
     
 
 void draw(){
+  println(zoff);
   pixel_intensity();
   for (int i = 0; i < count; i++){
     particles[i].follow(flowfield);
