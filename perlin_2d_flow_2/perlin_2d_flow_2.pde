@@ -90,7 +90,7 @@ void mouseClicked() {
     
 
 void draw(){
-  println(zoff);
+  println(zoff );
   pixel_intensity();
   for (int i = 0; i < count; i++){
     particles[i].follow(flowfield);
