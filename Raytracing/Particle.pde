@@ -12,12 +12,14 @@ class Particle{
     }
   }
   
-  void show(Boundary wall){
+  void show(Boundary[] walls){
     fill(255);
     //ellipse(pos.x, pos.y, 10, 10);
     for (int i = 0; i < rays.length; i++){
-      println(i, rays[i].pos, rays[i].dir);
-      rays[i].show(wall);
+      for (int j = 0; j < walls.length; j++){
+        //println(i, rays[i].pos, rays[i].dir);
+        rays[i].show(walls[j]);
+      }
     }
   }
     

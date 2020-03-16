@@ -22,7 +22,7 @@ class Ray{
   }
   
   PVector cast(Boundary wall){
-    println(pos, dir, wall.a, wall.b);
+    //println(pos, dir, wall.a, wall.b);
     float x1 = wall.a.x;
     float y1 = wall.a.y;
     float x2 = wall.b.x;
