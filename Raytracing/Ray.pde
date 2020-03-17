@@ -2,11 +2,14 @@ class Ray{
    PVector pos;
    PVector dir;
    color col;
+   int wall_index;
 
-  Ray(PVector pos_1, float rad, color col_incoming){
+  Ray(PVector pos_1, float rad, color col_incoming, int wall_index_incoming){
     pos = pos_1;
     dir = PVector.fromAngle(rad);
     col = col_incoming;
+    wall_index = wall_index_incoming;
+    
   }
   
   void show(Boundary wall){
