@@ -1,14 +1,16 @@
 class Ray{
    PVector pos;
    PVector dir;
+   color col;
 
-  Ray(PVector pos_1, float rad){
+  Ray(PVector pos_1, float rad, color col_incoming){
     pos = pos_1;
     dir = PVector.fromAngle(rad);
+    col = col_incoming;
   }
   
   void show(Boundary wall){
-    stroke(255);
+    stroke(col);
     push();
     translate(pos.x, pos.y);
     line(0, 0, dir.x * 300, dir.y * 300);
@@ -54,10 +56,12 @@ class Ray{
     }
   }
   
-  void setDir(float x, float y){
-    dir.x = x - pos.x;
-    dir.y = y - pos.y;
-    dir.normalize();
-  }
+  //void setDir(float x, float y){
+  //  dir.x = x - pos.x;
+  //  dir.y = y - pos.y;
+  //  dir.normalize();
+  //}
+  
+  
     
 }
