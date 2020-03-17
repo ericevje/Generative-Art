@@ -19,13 +19,13 @@ class Particle{
   
   
   void show(Boundary[] walls){
-    fill(255);
-    temp_rays = new Ray[2];
-    PVector temp_pt = new PVector(random(width), random(height));
-    temp_rays[1] = new Ray(temp_pt, random(2*PI), color(255, 0, 0, 255));
-    temp_rays[1].show(walls[1]);
-    append(rays, temp_rays[1]);
-    println(rays.length);
+    //fill(255);
+    //temp_rays = new Ray[2];
+    //PVector temp_pt = new PVector(random(width), random(height));
+    //temp_rays[1] = new Ray(temp_pt, random(2*PI), color(255, 0, 0, 255));
+    //temp_rays[1].show(walls[1]);
+    //rays = (Ray[]) append(rays, temp_rays[1]);
+    //println(rays.length);
     for (int i = 0; i < rays.length; i++){
       float shortest = 1000000;
       PVector nearest = null;
@@ -46,7 +46,7 @@ class Particle{
         line(rays[i].pos.x, rays[i].pos.y, nearest.x, nearest.y);
         float theta_inc = refract(near_bound, rays[i]);
         Ray inc_ray = new Ray(nearest, theta_inc, color(250, 0, 0, 50));
-        append(rays, inc_ray);
+        rays = (Ray[]) append(rays, inc_ray);
       }
     }
   }
@@ -66,6 +66,4 @@ class Particle{
     //println(theta_ray, y, x, theta_wall, theta_inc);
     return theta_inc;
   }
-    
-  
 }

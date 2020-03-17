@@ -8,7 +8,7 @@ int num_walls = 10;
 
 
 void setup(){
-  //frameRate(1);
+  frameRate(1);
   size(1000, 1000);
   walls = new Boundary[num_walls];
   for (int i = 0; i < walls.length; i++){
@@ -32,6 +32,6 @@ void draw(){
   //wall.show();
   //ray.show();
   p.show(walls);
-  //p.update(mouseX, mouseY);
+  p.update(mouseX, mouseY);
   //flat.show(walls[1]);
 }
