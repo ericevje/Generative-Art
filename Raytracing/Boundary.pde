@@ -8,7 +8,7 @@ class Boundary{
   }
   
   void show(){
-    stroke(255);
+    stroke(0);
     line(a.x, a.y, b.x, b.y);
   }
 }
