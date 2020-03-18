@@ -46,7 +46,7 @@ class Particle{
       
       if (nearest != null){
         stroke(rays[i].col);
-        line(rays[i].pos.x, rays[i].pos.y, nearest.x, nearest.y);
+        //line(rays[i].pos.x, rays[i].pos.y, nearest.x, nearest.y);
         float theta_inc = refract(near_bound, rays[i]);
         float alpha = alpha(rays[i].col) * 0.9;
         float red = red(int(rays[i].col)) * 0.9;
