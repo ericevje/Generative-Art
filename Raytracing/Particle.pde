@@ -40,15 +40,16 @@ class Particle{
           }
         }
       }
-      stroke(255);
-      points = append(points, pt_closest.x);
-      points = append(points, pt_closest.y);
+      stroke(0, 10);
+      point(pt_closest.x, pt_closest.y);
+      //points = append(points, pt_closest.x);
+      //points = append(points, pt_closest.y);
       
       if (nearest != null){
         stroke(rays[i].col);
         //line(rays[i].pos.x, rays[i].pos.y, nearest.x, nearest.y);
         float theta_inc = refract(near_bound, rays[i]);
-        float alpha = alpha(rays[i].col) * 0.9;
+        float alpha = alpha(rays[i].col) * 0.99;
         float red = red(int(rays[i].col)) * 0.9;
         //println(red, "0", 255, alpha);
         
@@ -69,7 +70,7 @@ class Particle{
   float refract(Boundary wall, Ray ray){
     float theta_ray = ray.dir.heading();
     float theta_inc = theta_ray;
-    if (random(100) < 50){
+    if (random(100) < 65){
       float y = wall.b.y - wall.a.y;
       float x = wall.b.x - wall.a.x;
       float theta_wall = atan(y / x);
