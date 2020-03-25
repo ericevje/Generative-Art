@@ -17,7 +17,7 @@ class Particle{
   }
   
   
-  void show(Boundary[] walls){
+  void show(ArrayList<Boundary> walls){
     temp_rays = new Ray[1];
     temp_rays[0] = new Ray(new PVector(0, 0), 0, 0, -1);
     for (int i = 0; i < rays.length; i++){
@@ -26,32 +26,27 @@ class Particle{
       Boundary near_bound = null;
       int wall_index = -1;
       PVector pt_closest = new PVector(0, 0);
-      for (int j= 0; j < walls.length; j++){
-        PVector pt = rays[i].cast(walls[j]);
-        //println(j, rays[i].wall_index);
+      for (int j= 0; j < walls.size(); j++){
+        PVector pt = rays[i].cast(walls.get(j));
         if (pt != null && j != rays[i].wall_index){
           float d = abs(pt.dist(rays[i].pos));
           if (d < shortest){
             nearest = pt;
             shortest = d;
-            near_bound = walls[j];
+            near_bound = walls.get(j);
             wall_index = j;
             pt_closest = pt;
           }
         }
       }
-      stroke(0, 10);
+      stroke(0, 20);
       point(pt_closest.x, pt_closest.y);
-      //points = append(points, pt_closest.x);
-      //points = append(points, pt_closest.y);
       
       if (nearest != null){
         stroke(rays[i].col);
-        //line(rays[i].pos.x, rays[i].pos.y, nearest.x, nearest.y);
         float theta_inc = refract(near_bound, rays[i]);
         float alpha = alpha(rays[i].col) * 0.99;
         float red = red(int(rays[i].col)) * 0.9;
-        //println(red, "0", 255, alpha);
         
         if (alpha > 2){
           Ray inc_ray = new Ray(nearest, theta_inc, color(red, 0, 255, alpha), wall_index);

@@ -1,5 +1,6 @@
 PImage img;
-int num = 15000;
+PImage img_og;
+int num = 10000;
 int[] rank = new int[num]; 
 int[] xS = new int[num];
 int[] yS = new int[num];
@@ -9,14 +10,19 @@ color dblue = color(112,83,145);
 color dblue2 = color(185,181,252);
 
 void settings(){
-  img = loadImage("https://uploads5.wikiart.org/images/paul-gauguin/where-do-we-come-from-what-are-we-where-are-we-going-1897.jpg!Large.jpg"); //choose image here
+  //img = loadImage("https://uploads5.wikiart.org/images/paul-gauguin/where-do-we-come-from-what-are-we-where-are-we-going-1897.jpg!Large.jpg");
+  img = loadImage("https://media.npr.org/assets/img/2014/05/08/simp2006_homerarmscrossed_f_custom-ec94cc7a10463aa8260b2c5a9a3ebea29c7ecbfe-s800-c85.jpg");//choose image here
   size(img.width, img.height);
 }
 
 void setup() {
-  img = loadImage("https://uploads5.wikiart.org/images/paul-gauguin/where-do-we-come-from-what-are-we-where-are-we-going-1897.jpg!Large.jpg"); //choose image here
+  //img = loadImage("https://uploads5.wikiart.org/images/paul-gauguin/where-do-we-come-from-what-are-we-where-are-we-going-1897.jpg!Large.jpg"); //choose image here
+  img = loadImage("https://media.npr.org/assets/img/2014/05/08/simp2006_homerarmscrossed_f_custom-ec94cc7a10463aa8260b2c5a9a3ebea29c7ecbfe-s800-c85.jpg");//choose image here
+  img_og = img.copy();
+  img.filter(INVERT);
+  img.filter(POSTERIZE, 2);
   //noStroke();
-  background(0);
+  //background(img_og);
   
   for(int j=0;j<num;j++){
     rank[j]=0; 
@@ -62,7 +68,7 @@ void lines2(){
   }
   int a=0;
   int b=0;
-  float curDist=width;;
+  float curDist=width;
   while(vectors.size()>34){
     closest=width;
     float px = vectors.get(a).x;
@@ -75,10 +81,18 @@ void lines2(){
           b=p; 
       }
     }
-  float cRatio = py/height;
-  color cor = lerpColor(dblue,dblue2,cRatio); 
-  stroke(cor);
-  line(px,py,vectors.get(b).x,vectors.get(b).y);
-  a=b;
+    float cRatio = py/height;
+    color cor = lerpColor(dblue,dblue2,cRatio); 
+    stroke(cor);
+    float dist = dist(px,py,vectors.get(b).x,vectors.get(b).y);
+    println(dist);
+    if(dist < ((width+height)/2)/50){
+      line(px,py,vectors.get(b).x,vectors.get(b).y);
+    }
+    //else{
+    //  stroke(255);
+    //  line(px,py,vectors.get(b).x,vectors.get(b).y);
+    //}
+    a=b;
   }
 } 
