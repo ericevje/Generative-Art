@@ -67,13 +67,15 @@ class Contours {
       for(int p=0;p<vectors.size();p++){
         curDist=dist(px,py,vectors.get(p).x,vectors.get(p).y);
         if(curDist<closest){
-            closest=curDist;
-            b=p; 
+            if (curDist < 10){
+              vectors.remove(p);
+            }
+            else{
+              closest=curDist;
+              b=p;
+            }
         }
       }
-      //float cRatio = py/height;
-      //color cor = lerpColor(dblue,dblue2,cRatio); 
-      //stroke(cor);
       Boundary new_boundary = new Boundary(px,py,vectors.get(b).x,vectors.get(b).y);
       if (new_boundary != null){
         boundaries.add(new_boundary);
@@ -95,11 +97,14 @@ class Contours {
   
   void clean_up(){
     for (int i = boundaries.size() - 1; i >= 0 ; i--){
-      float dist = abs(dist(boundaries.get(i).a.x, boundaries.get(i).a.y, boundaries.get(i).b.x, boundaries.get(i).b.y));
-      println(dist);
+      float dist = abs(PVector.dist(boundaries.get(i).a, boundaries.get(i).b));
       //println(dist);
-      if(dist > ((width+height)/2)/50){
+      if(dist > ((width+height)/2)/30){
         boundaries.remove(i);
+      }
+      else{
+        stroke(0, 50);
+        line(boundaries.get(i).a.x, boundaries.get(i).a.y, boundaries.get(i).b.x, boundaries.get(i).b.y); 
       }
     }
   }

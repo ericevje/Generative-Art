@@ -2,7 +2,7 @@ class Particle{
   PVector pos;
   Ray[] rays;
   Ray[] temp_rays;
-  int num_rays = 180; //Must evenly divide 360
+  int num_rays = 18; //Must evenly divide 360
   int step_size = 360 / num_rays;
   
   Particle(float x, float y){
@@ -39,14 +39,17 @@ class Particle{
           }
         }
       }
-      stroke(0, 20);
+      stroke(0, 5);
       point(pt_closest.x, pt_closest.y);
+      stroke(0, 1);
+      line(pt_closest.x, pt_closest.y, rays[i].pos.x, rays[i].pos.y);
+      
       
       if (nearest != null){
         stroke(rays[i].col);
         float theta_inc = refract(near_bound, rays[i]);
         float alpha = alpha(rays[i].col) * 0.99;
-        float red = red(int(rays[i].col)) * 0.9;
+        float red = red(int(rays[i].col)) * 0.9; 
         
         if (alpha > 2){
           Ray inc_ray = new Ray(nearest, theta_inc, color(red, 0, 255, alpha), wall_index);
@@ -65,7 +68,7 @@ class Particle{
   float refract(Boundary wall, Ray ray){
     float theta_ray = ray.dir.heading();
     float theta_inc = theta_ray;
-    if (random(100) < 65){
+    if (random(100) < 75){
       float y = wall.b.y - wall.a.y;
       float x = wall.b.x - wall.a.x;
       float theta_wall = atan(y / x);

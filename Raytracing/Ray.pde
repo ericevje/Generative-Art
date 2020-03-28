@@ -57,14 +57,5 @@ class Ray{
       //println("not in range");
       return null;
     }
-  }
-  
-  //void setDir(float x, float y){
-  //  dir.x = x - pos.x;
-  //  dir.y = y - pos.y;
-  //  dir.normalize();
-  //}
-  
-  
-    
+  }   
 }
