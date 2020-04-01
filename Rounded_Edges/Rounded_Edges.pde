@@ -53,13 +53,9 @@ void draw(){
   noStroke();
   fill(0);
   rectMode(CENTER);
-  rect(width/2, height/2, width-(width/20), height-(width/20));
+  rect(width/2, height/2, width-(width/18), height-(width/18));
   saveFrame("mask.tiff");
   background(255);
-  for(int i = 0; i < contour_worker.edges.size(); i++){
-    stroke(0);
-    point(contour_worker.edges.get(i).x, contour_worker.edges.get(i).y);
-  }
   PImage rounds = loadImage("rounds.tiff");
   PImage mask = loadImage("mask.tiff");
   mask.filter(INVERT);
@@ -67,46 +63,4 @@ void draw(){
   image(rounds, 0, 0);
   saveFrame();
   noLoop();
-}
-
-void mousePressed() {
-  println("mouse pressed");
-  saveFrame("sketch.jpg");
-  background(255);
-  img = loadImage("sketch.jpg");
-  loop();
-}
-
-void masking(){
-  background(255);
-  push();
-  translate(mouseX, mouseY);
-  float x = (width/2) - (mouseX - width/2);
-  float y = (height/2) - (mouseY - height/2);
-  stroke(0);
-  fill(0);
-  rectMode(CENTER);
-  float bar_width = random(width/2, width);
-  float bar_height = random(0, height/10);
-  rect(0, 0, bar_width, bar_height);
-  pop();
-  push();
-  translate(x, y);
-  stroke(0);
-  fill(0);
-  rectMode(CENTER);
-  rect(0, 0, bar_width, bar_height);
-  pop();
-  saveFrame("mask.jpg");
-  mask_img = loadImage("mask.jpg");
-  //mask_img.filter(INVERT);
-  img_og.mask(mask_img);
-}
-
-void overlay(){
-  background(255);
-  PImage sketch = loadImage("sketch.jpg");
-  image(sketch, 0, 0);
-  image(img_og, 0, 0);
-  
 }

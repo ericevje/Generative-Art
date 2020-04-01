@@ -55,18 +55,18 @@ void setup(){
 
 void draw(){
     //println(frameRate);
-    //for (int i = 0; i < particles.length; i++) {
-    //  particles[i].show(walls);
-    //}
+    for (int i = 0; i < particles.length; i++) {
+      particles[i].show(walls);
+    }
     //  for (int i = 0; i < walls.size(); i++) {
     //  walls.get(i).show();
     //}
     
-    //if(random(100) < 25){
-    //  //Particle p = new Particle(map(noise(xoff), 0, 1, 0, width), map(noise(xoff+100), 0, 1, 0, height));
-    //  Particle p = new Particle(random(width), random(height));
-    //  particles = (Particle[]) append(particles, p);
-    //}
+    if(random(100) < 25){
+      //Particle p = new Particle(map(noise(xoff), 0, 1, 0, width), map(noise(xoff+100), 0, 1, 0, height));
+      Particle p = new Particle(random(width), random(height));
+      particles = (Particle[]) append(particles, p);
+    }
     xoff += 0.05;
     
     counter ++;

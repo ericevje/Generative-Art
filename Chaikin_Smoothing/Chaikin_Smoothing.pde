@@ -1,7 +1,4 @@
 class smoother{
-
-  PShape circ;
-  float zoff = 0;
   
   smoother(){
   }
@@ -27,13 +24,7 @@ class smoother{
       //p.setMag(radius+fluc);
       p.setMag(radius+random(-(radius/10), radius/10));
       p.add(master);
-      push();
-      translate(p.x, p.y);
-      noStroke();
-      fill(0, 50); 
-      ellipse(0, 0, 5, 5);
       circ.vertex(p.x, p.y);
-      pop();
     }
     PShape rounded = createShape();
     rounded = chaikin_close(circ, 0.25, 4);
