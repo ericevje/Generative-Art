@@ -78,6 +78,8 @@ class Particle{
     int index = particle_column + particle_row * cols;
     //println(index);
     
+    println(scl, pos.x, pos.y, particle_column, particle_row, cols, index);
+    println(flowfield.length);
     PVector force = flowfield[index];
     //print(force);
     applyForce(force);

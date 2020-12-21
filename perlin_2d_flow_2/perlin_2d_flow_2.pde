@@ -20,7 +20,8 @@ PVector[] flowfield;
 Particle[] particles;
 
 void setup() {
-  size(9000, 9000);
+  // Must be >= 800x800
+  size(800, 800);
   background(255);
   cols = floor(width / scl);
   rows = floor(height / scl);
@@ -90,7 +91,7 @@ void mouseClicked() {
     
 
 void draw(){
-  println(zoff );
+  println(zoff);
   pixel_intensity();
   for (int i = 0; i < count; i++){
     particles[i].follow(flowfield);

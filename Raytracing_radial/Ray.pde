@@ -27,7 +27,6 @@ class Ray{
   }
   
   PVector cast(Boundary wall){
-    //println(pos, dir, wall.a, wall.b);
     float x1 = wall.a.x;
     float y1 = wall.a.y;
     float x2 = wall.b.x;
@@ -37,6 +36,9 @@ class Ray{
     float y3 = pos.y;
     float x4 = pos.x + dir.x;
     float y4 = pos.y + dir.y;
+    
+    //println(x1, y1, x2, y2);
+    //println(x3, y3, x4, y4);
     
     float den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
     if (den == 0){
@@ -48,13 +50,14 @@ class Ray{
     
     
     if (t > 0 && t < 1 && u > 0){
+      //println("New vector");
+      //println("\n");
       PVector pt = new PVector();
       pt.x = x1 + t * (x2 - x1);
       pt.y = y1 + t * (y2 - y1);
       return pt;
     }
     else{
-      //println("not in range");
       return null;
     }
   }   

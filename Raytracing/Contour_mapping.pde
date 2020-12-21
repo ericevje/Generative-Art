@@ -55,12 +55,12 @@ class Contours {
            }
          }
          
-         if (diff > 150){
+         if (diff > 35){
            edges.add(new PVector(x,y));
            stroke(red(img.pixels[loc]), green(img.pixels[loc]), blue(img.pixels[loc]), 150);
            fill(red(img.pixels[loc]), green(img.pixels[loc]), blue(img.pixels[loc]), 150);
            ellipseMode(CENTER);
-           float size = (center/(255*3)) * ((width+height)/2)/10;
+           //float size = (center/(255*3)) * ((width+height)/2)/10;
            //ellipse(x, y, size, size);
          }
         }
