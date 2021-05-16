@@ -110,7 +110,7 @@ class Contours {
       float dist = abs(PVector.dist(boundaries.get(i).a, boundaries.get(i).b));
       //print(dist + "\t"); println(((width+height)/2)/100);
       //println(((width+height)/2)/100);
-      if(dist > ((width+height)/2)/100){
+      if(dist > ((width+height)/2)/25){
         boundaries.remove(i);
       }
       //else{

@@ -29,7 +29,7 @@ void setup(){
   for (int y = 0; y < rows; y++){
     for (int x = 0; x < cols; x++){
       grid[x][y] = new PVector(x*scl, y*scl);
-      //print(grid[x][y]);
+      point(grid[x][y].x, grid[x][y].y);
     }
   }
   //loadPixels();
@@ -46,53 +46,53 @@ void setup(){
   //  }
   //}
   //updatePixels();
-  background(white);
+  //background(white);
 }
 
 void draw(){
-  background(white);
-  //println(frameRate);
-  PVector[][] cur_grid = new PVector[cols][rows];
-  zoff += inc;
-  yoff = 0;
-  for (int y = 0; y < rows; y++){
-    xoff = 0;
-    for (int x = 0; x < cols; x++){
-      float mag = map(noise(xoff, yoff, zoff), 0, 1, -width/(mult*scl), width/(mult*scl));
-      float dir = map(noise(yoff, xoff, zoff+.05), 0, 1, 0, 6*PI);
-      PVector p = PVector.fromAngle(dir);
-      p.setMag(mag);
-      cur_grid[x][y] = new PVector(grid[x][y].x + p.x, grid[x][y].y + p.y);
-      //point(cur_grid[x][y].x, cur_grid[x][y].y);
-      xoff += inc;
-    }
-    yoff += inc;
-  }
+  //background(white);
+  ////println(frameRate);
+  //PVector[][] cur_grid = new PVector[cols][rows];
+  //zoff += inc;
+  //yoff = 0;
+  //for (int y = 0; y < rows; y++){
+  //  xoff = 0;
+  //  for (int x = 0; x < cols; x++){
+  //    float mag = map(noise(xoff, yoff, zoff), 0, 1, -width/(mult*scl), width/(mult*scl));
+  //    float dir = map(noise(yoff, xoff, zoff+.05), 0, 1, 0, 6*PI);
+  //    PVector p = PVector.fromAngle(dir);
+  //    p.setMag(mag);
+  //    cur_grid[x][y] = new PVector(grid[x][y].x + p.x, grid[x][y].y + p.y);
+  //    point(cur_grid[x][y].x, cur_grid[x][y].y);
+  //    xoff += inc;
+  //  }
+  //  yoff += inc;
+  //}
   
-    for (int y = 1; y < rows-1; y++){
-    noFill();
-    beginShape();
-    curveVertex(cur_grid[0][y].x, cur_grid[0][y].y);
-    //stroke(255, 255, 255);
-    color cur_color = lerpColor(light_blue, orange, random(0, 1));
-    for (int x = 1; x < cols-1; x++){
-      curveVertex(cur_grid[x][y].x, cur_grid[x][y].y);
-    }
-    curveVertex(cur_grid[cols - 1][y].x, cur_grid[cols - 1][y].y);
-    endShape();
-  }
+  //  for (int y = 1; y < rows-1; y++){
+  //  noFill();
+  //  beginShape();
+  //  curveVertex(cur_grid[0][y].x, cur_grid[0][y].y);
+  //  //stroke(255, 255, 255);
+  //  color cur_color = lerpColor(light_blue, orange, random(0, 1));
+  //  for (int x = 1; x < cols-1; x++){
+  //    curveVertex(cur_grid[x][y].x, cur_grid[x][y].y);
+  //  }
+  //  curveVertex(cur_grid[cols - 1][y].x, cur_grid[cols - 1][y].y);
+  //  endShape();
+  //}
   
-  for (int x = 1; x < cols-1; x++){
-    beginShape();
-    curveVertex(cur_grid[x][0].x, cur_grid[x][0].y);
-    //stroke(255, 255, 255);
-    color cur_color = lerpColor(light_blue, orange, random(0, 1));
-    for (int y = 1; y < rows-1; y++){
-      curveVertex(cur_grid[x][y].x, cur_grid[x][y].y);
-    }
-    curveVertex(cur_grid[x][rows-1].x, cur_grid[x][rows-1].y);
-    endShape();
-  }
+  //for (int x = 1; x < cols-1; x++){
+  //  beginShape();
+  //  curveVertex(cur_grid[x][0].x, cur_grid[x][0].y);
+  //  //stroke(255, 255, 255);
+  //  color cur_color = lerpColor(light_blue, orange, random(0, 1));
+  //  for (int y = 1; y < rows-1; y++){
+  //    curveVertex(cur_grid[x][y].x, cur_grid[x][y].y);
+  //  }
+  //  curveVertex(cur_grid[x][rows-1].x, cur_grid[x][rows-1].y);
+  //  endShape();
+  //}
   if (save_images == true){
     println("saving frame");
     saveFrame();

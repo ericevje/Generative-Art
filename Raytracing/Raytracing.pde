@@ -17,8 +17,9 @@ Contours contour_worker;
 
 void settings(){
   //img = loadImage("IMG_3300.JPG");
-  img = loadImage("IMG_3939.JPG");
-  //img.resize(img.width/2, img.height/2);
+  //img = loadImage("IMG_3939.JPG");
+  img = loadImage("IMG_4822.JPG");
+  img.resize(img.width/2, img.height/2);
   size(img.width, img.height);
 }
 
