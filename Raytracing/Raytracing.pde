@@ -18,7 +18,7 @@ Contours contour_worker;
 void settings(){
   //img = loadImage("IMG_3300.JPG");
   //img = loadImage("IMG_3939.JPG");
-  img = loadImage("IMG_4822.JPG");
+  img = loadImage("ARCB000301L0040.png");
   img.resize(img.width/2, img.height/2);
   size(img.width, img.height);
 }
@@ -26,7 +26,7 @@ void settings(){
 void setup(){
   background(255);
   particles = new Particle[1];
-  //particles[0] = new Particle(width/2, height/2);
+  particles[0] = new Particle(width/2, height/2);
   walls = new ArrayList<Boundary>();
   img_og = img.copy();
   
@@ -44,16 +44,16 @@ void setup(){
 }
 
 void draw(){
-    //println(frameRate);
-    //for (int i = 0; i < particles.length; i++) {
-    //  particles[i].show(walls);
-    //}
+    println(frameRate);
+    for (int i = 0; i < particles.length; i++) {
+      particles[i].show(walls);
+    }
 
     
     //if(random(100) < 25){
     //  Particle p = new Particle(map(noise(xoff), 0, 1, 0, width), map(noise(xoff+100), 0, 1, 0, height));
     //  //Particle p = new Particle(random(width), random(height));
-    //  particles = (Particle[]) append(particles, p);
+    //  particles = (Particle[]).append(particles, p);
     //}
     xoff += 0.05;
     

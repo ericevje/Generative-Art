@@ -55,7 +55,7 @@ class Contours {
            }
          }
          
-         if (diff > 35){
+         if (diff > 150){
            edges.add(new PVector(x,y));
            stroke(red(img.pixels[loc]), green(img.pixels[loc]), blue(img.pixels[loc]), 150);
            fill(red(img.pixels[loc]), green(img.pixels[loc]), blue(img.pixels[loc]), 150);
