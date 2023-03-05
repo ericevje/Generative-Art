@@ -1,75 +1,40 @@
 class Symbol{
-  ArrayList<Ring> rings = new ArrayList<Ring>();
-  ArrayList<PVector> psuedo_lemn = new ArrayList<PVector>();
-  ArrayList<PVector> psuedo_circ = new ArrayList<PVector>();
-  ArrayList<PVector> rotation_curve = new ArrayList<PVector>();
-  ArrayList<PVector> rotation_diameter = new ArrayList<PVector>();
-  float a, b, x_0, y_0;
+  ArrayList<Ring> rings = new ArrayList<Ring>(); // ArrayList to store n Ring objects
+  ArrayList<PVector> psuedo_lemn = new ArrayList<PVector>(); // Debug only. Vectors for infinty symbol
+  ArrayList<PVector> psuedo_circ = new ArrayList<PVector>(); // Debug only. Vectors for circle
+  ArrayList<PVector> rotation_curve = new ArrayList<PVector>(); // Debug only. Vectors for rotation point between the corresponding points of the infinity symbol and circle
+  ArrayList<PVector> rotation_diameter = new ArrayList<PVector>(); // Debug only. Vector (though doesn't have to be), 
+                                                                   // for the diameter of the distance between the rotation curve and the two connecting point
   float step_size;
+  float r;
   int n_rings;
   float global_error = 0;
   
-  Symbol(int _n_rings, float _a, float _b, float _x_0, float _y_0){
-    a = _a;
-    b = _b;
-    x_0 = _x_0;
-    y_0 = _y_0;
+  Symbol(int _n_rings, float _r){
     n_rings = _n_rings;
-    step_size = 2*PI/n_rings;
+    r = _r;
   }
   
   void calc_curve_coords(){
-    float r = 100;
     step_size = r/n_rings;
-    int i = 0;
     for (float x = -r; x <= r; x = x + step_size){
+      // Equations derived from  https://mathworld.wolfram.com/Lemniscate.html
       float r_prime = r/sqrt(2);
       float lemn_y = sqrt(-pow(r_prime,2) + sqrt(pow(r_prime,4) + 4*pow(r_prime,2)*pow(x,2)) - pow(x,2));
       float circ_y = sqrt(pow(r,2) - pow(x,2));
       float rot_y = (circ_y - lemn_y)/2;
       float rot_d = circ_y + lemn_y;
+      
+      //For debugging
       psuedo_lemn.add(new PVector(x, lemn_y));
       psuedo_circ.add(new PVector(x, circ_y));
       rotation_curve.add(new PVector(x, rot_y));
       rotation_diameter.add(new PVector(x, rot_d));
+      
+      // Adds new rings on the circle to start
       rings.add(new Ring(new PVector(x, rot_y), new PVector(0, rot_d/2), 20, 0));
       rings.add(new Ring(new PVector(x, -rot_y), new PVector(0, -rot_d/2), 20, 0));
-      i++;
     }
-  }
-  
-  void debug_show_point(PVector point, color col, float scl){
-    stroke(255);
-    push();
-    translate(scl*point.x, scl*point.y);
-    circle(0, 0, 1);
-    pop();
-    
-    push();
-    translate(scl*point.x, -scl*point.y);
-    circle(0, 0, 1);
-    pop();
-  }
-  
-  void debug_show_rotation_circle(PVector rot_point, PVector rot_dia, color col, float scl){
-    stroke(col);
-    strokeWeight(2);
-    //fill(12, 12, 12, 5);
-    noFill();
-    push();
-    translate(scl * rot_point.x, scl * rot_point.y);
-    rotateY(PI/2);
-    circle(0, 0, rot_dia.y);
-    pop();
-    
-    stroke(0, 100, 255);
-    //fill(12, 12, 12, 5);
-    noFill();
-    push();
-    translate(scl * rot_point.x, -scl * rot_point.y);
-    rotateY(PI/2);
-    circle(0, 0, rot_dia.y);
-    pop();
   }
   
   void show(){
@@ -105,6 +70,43 @@ class Symbol{
     for (int i = 0; i < rings.size(); i++){
       rings.get(i).rotating = false;
     }
+  }
+  
+  // ******************************************************* //
+  // ****************DEBUG ONLY***************************** //
+  // ******************************************************* //
+  void debug_show_point(PVector point, color col, float scl){
+    stroke(255);
+    push();
+    translate(scl*point.x, scl*point.y);
+    circle(0, 0, 1);
+    pop();
+    
+    push();
+    translate(scl*point.x, -scl*point.y);
+    circle(0, 0, 1);
+    pop();
+  }
+  
+  void debug_show_rotation_circle(PVector rot_point, PVector rot_dia, color col, float scl){
+    stroke(col);
+    strokeWeight(2);
+    //fill(12, 12, 12, 5);
+    noFill();
+    push();
+    translate(scl * rot_point.x, scl * rot_point.y);
+    rotateY(PI/2);
+    circle(0, 0, rot_dia.y);
+    pop();
+    
+    stroke(0, 100, 255);
+    //fill(12, 12, 12, 5);
+    noFill();
+    push();
+    translate(scl * rot_point.x, -scl * rot_point.y);
+    rotateY(PI/2);
+    circle(0, 0, rot_dia.y);
+    pop();
   }
   
   void debug_show_guide_curves(){

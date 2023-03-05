@@ -1,17 +1,17 @@
 class Ring{
-   PVector rot_center; //3D vector for rotation point of ring
-   PVector rot_vector; //Diameter of rotation circle
-   float diameter;
-   boolean rotating;
-   float desired_angle;
-   float angle;
-   float max_rotation_vel = 0.15574533;
-   float max_rotation_acc = max_rotation_vel/(framerate*3);
-   float rotation_vel = 0;
-   float rotation_acc = 50;
+   PVector rot_center; // 3D vector for rotation point of ring
+   PVector rot_vector; // Diameter of rotation circle
+   float diameter; // Diameter of circle at each point
+   boolean rotating; // Whether or not the rign has been reset after a shape change
+   float desired_angle; // Setpoint angle. 0 for circle, PI for infinty symbol
+   float angle; // Current angle
+   float max_rotation_vel = 0.15574533; // Arbitrary value for maximum rotational velocity
+   float max_rotation_acc = max_rotation_vel/(framerate*3); // Arbitrary value for maximum rotational acceleration
+   float rotation_vel = 0; // Current rotational velocity
    
    
    // PID control system variables
+   // See here for more info: https://www.robotsforroboticists.com/pid-control/
    float e_prior = 0;
    float integral_prior = 0;
    float output_prior = 0;
@@ -32,18 +32,13 @@ class Ring{
   }
   
   void advance_position(){
-    rotation_vel = pid_control(desired_angle);
-    
-    if (rotation_vel < max_rotation_vel){
-      rotation_vel += max_rotation_vel/rotation_acc;
-    }
-    
-    rot_vector  = rot_vector.rotate(rotation_vel);
-    angle += rotation_vel;
-      
+    rotation_vel = pid_control(desired_angle); // Calculate rotation velocity
+    rot_vector  = rot_vector.rotate(rotation_vel); // Update angle of rotation by velocity * time (in this case normalized to 1 frame of time)
+    angle += rotation_vel; // Update the angle rotated through for the control system
   }
   
   float pid_control(float desired_angle){
+    // See here for more info: https://www.robotsforroboticists.com/pid-control/
     float e = desired_angle - angle;
     float integral = integral_prior + e * integration_time;
     float derivative = (e - e_prior) / integration_time;
@@ -51,6 +46,7 @@ class Ring{
     e_prior = e;
     integral_prior = integral;
     
+    // Limit acceleration below a certain threshold
     float acc = output - output_prior;
     if (acc > max_rotation_acc){
       output = output + max_rotation_acc;
@@ -59,6 +55,7 @@ class Ring{
       output = output - max_rotation_acc;
     }
 
+    // Limit velocity below a threshold
     if (output > max_rotation_vel) {
       return max_rotation_vel;
     }

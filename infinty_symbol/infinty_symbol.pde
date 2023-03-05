@@ -1,17 +1,11 @@
 import peasy.*;
 PeasyCam cam;
 
-Ring ring;
 Symbol symbol;
-PVector ring_pos;
-float x = 0;
-float scl = 0;
-int framerate = 24;
-float set_point = PI;
-float min_error = 5.6e-4;
-
-
-
+float scl = 0; // Used for X rotation
+int framerate = 24; // Pins the framerate to 24 fps. The control system and max velocity and acceleration are tied to this 
+float set_point = PI; // Starting setpoint for the symbol. PI equates to the infinty symbol 
+float min_error = 5.6e-4; // Minimum average error required before changing to the next symbol conformation
 
 void settings(){
   size(800, 800, "processing.opengl.PGraphics3D");
@@ -20,26 +14,32 @@ void settings(){
 void setup(){
   cam = new PeasyCam(this, 225);
   frameRate(framerate);
-  symbol = new Symbol(50, 1, .6, .9, 0);
+  symbol = new Symbol(50, 100);
   symbol.calc_curve_coords();
 }
 
 void draw(){
   background(12, 12, 12);
+  
+  // Rotation
   rotateZ(PI/2);
-  //rotateX(PI/4);
   rotateY(PI/8);
   rotateX(scl);
-  //rotateY(-PI/4);
   
+  // For debugging. Shows unit axes
   //draw_coordinates();
-  symbol.show();
   
+  symbol.show();
+
   symbol.advance_rings(set_point);
+  
   float error = symbol.calc_error();
+  
+  // For debugging
   println(error);
+  
   if (abs(error) < min_error) {
-    if (set_point > 3) {
+    if (set_point > 3) { // catches when setpoint is set to PI. 
       symbol.reset_rings();
       set_point = 0;
     }
@@ -48,16 +48,8 @@ void draw(){
       set_point = PI;
     }
   }
+  
   scl += 0.025;
-  
-  
-  //symbol.debug_show_guide_curves();
-  //x = x + scl;
-  
-  //saveFrame("frame-#####.jpg");
-  //if (x >= 2*PI){
-  //  exit();
-  //}
 }
 
 void draw_coordinates(){
